@@ -71,59 +71,6 @@ facilities = [
 ]
 
 
-
-@app.route('/')
-def index():
-    datas = []
-    for data in facilities:
-        if data["id"] == '123':
-            name = data["name"]
-            for num in encounters:
-                if num["facility"] == "123":
-                    num["name"] = name
-                    datas.append(num)
-                    #print(num)
-    return {"data":datas, "status":True}
-
-
-@app.route('/task1/<value>')
-def details(value):
-    values = []
-    for facility in facilities:
-        values.append(facility['id'])
-
-    name = ""
-    id = value
-    n_enrolls = 0
-    n_encounts = 0
-    enct_datas = []
-
-
-    if value in values:
-        for i in facilities:
-            for j in encounters:
-                if i['id'] == value and j['facility'] == value:
-                    name = i['name']
-
-                    n_enrolls = i['no_of_enrolee']
-
-                    n_encounts += 1
-
-                    enct_data = j
-                    enct_datas.append(enct_data)
-
-        return {
-            'names': name,
-            'facility_ids': id,
-            'no of enrollees': n_enrolls,
-            'no of encounters': n_encounts,
-            'encounter data': enct_datas,
-            'status': True
-        }
-    else:
-        return {'message':'invalid value',
-                'status': False}
-
 @app.route('/task/all_facilities')
 def all_facilities():
     values = []
@@ -158,7 +105,9 @@ def all_facilities():
                     }
                     All_facilities.append(each_facility)
                     each_facility = {}
-
+                    
+    # This was what i could come up with to stop the code from returning each facility twice like it did yesterday
+    #I am open to your suggestions on improving the code. It looks really clumsy to me:(
     for i in range(len(All_facilities)):
         if i % 2 == 0:
             display.append(All_facilities[i])
